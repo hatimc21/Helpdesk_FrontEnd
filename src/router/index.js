@@ -6,6 +6,7 @@ import Ticket from '../views/pages/ticket/Index.vue'
 import Employee from '../views/pages/employee/Index.vue'
 import Report from '../views/pages/report/Index.vue'
 import Layout from '../views/layout/Layout.vue'
+import SignUp from '../views/pages/SignUp/Index.vue'
 Vue.use(VueRouter);
 const routes = [
       {
@@ -18,6 +19,11 @@ const routes = [
         name: "login",
         path: "/",
         component: SignIn
+      },
+      {
+        name: "signup",
+        path: "/Signup",
+        component: SignUp
       },
       {
         path: "/tickets",

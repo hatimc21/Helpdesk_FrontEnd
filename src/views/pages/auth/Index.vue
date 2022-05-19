@@ -1,5 +1,6 @@
 <template>
   <div class="body">
+    <img style="display:block;position:absolute;margin-top:-310px;margin-left: 450px;" src="../../../assets/logo.png">
     <!-- begin:: card  -->
     <b-card
       header-bg-variant="dark"
@@ -38,6 +39,9 @@
         </b-form-group>
         <!-- end:: password-->
             <b-button v-on:click="Signin" tag="button">Sign In</b-button>
+            <br>
+            <br>
+            <b-button v-on:click="send_tosignup">create account</b-button>
       </b-form>
       <p class="mt-3 mb-3 text-muted text-center">
         © 2022
@@ -76,6 +80,10 @@ export default {
        { 
          this.$router.push({ name: "employees" })
         }
+      },
+      async send_tosignup()
+      {
+        this.$router.push({name: "signup"})
       }
       }
     }
@@ -84,7 +92,7 @@ export default {
 <style scoped lang="stylus">
 .body
   display: flex;
-  padding-top: 60px;
+  padding-top: 100px;
   padding-bottom: 60px;
   align-items: center;
   background-color: #f6f6f6;
