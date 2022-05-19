@@ -7,6 +7,8 @@ import Employee from '../views/pages/employee/Index.vue'
 import Report from '../views/pages/report/Index.vue'
 import Layout from '../views/layout/Layout.vue'
 import SignUp from '../views/pages/SignUp/Index.vue'
+import User_Home from '../views/pages/acc/user/Index.vue'
+import MainHome from '../views/pages/home/Index.vue'
 Vue.use(VueRouter);
 const routes = [
       {
@@ -16,9 +18,14 @@ const routes = [
        
       },
       {
-        name: "login",
+        name: "HOME",
         path: "/",
-        component: SignIn
+        component: MainHome
+      },
+      {
+        name: "user_home",
+        path: "/user_home",
+        component: User_Home
       },
       {
         name: "signup",
