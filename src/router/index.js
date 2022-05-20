@@ -3,12 +3,14 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import SignIn from '../views/pages/auth/Index.vue'
 import Ticket from '../views/pages/ticket/Index.vue'
-import Employee from '../views/pages/employee/Index.vue'
+import Users from '../views/pages/users/Index.vue'
 import Report from '../views/pages/report/Index.vue'
 import Layout from '../views/layout/Layout.vue'
 import SignUp from '../views/pages/SignUp/Index.vue'
 import User_Home from '../views/pages/acc/user/Index.vue'
+import Support_Home from '../views/pages/acc/support/Index.vue'
 import MainHome from '../views/pages/home/Index.vue'
+import Admin_Home from '../views/pages/acc/admin/Index.vue'
 Vue.use(VueRouter);
 const routes = [
       {
@@ -28,6 +30,11 @@ const routes = [
         component: User_Home
       },
       {
+        name: "admin_home",
+        path: "/admin_home",
+        component: Admin_Home
+      },
+      {
         name: "signup",
         path: "/Signup",
         component: SignUp
@@ -38,9 +45,9 @@ const routes = [
         component: Ticket
       },
       {
-        path: "/employees",
-        name: "employees",
-        component: Employee
+        path: "/users",
+        name: "users",
+        component: Users
       },
       {
         path: "/reports",
@@ -55,6 +62,11 @@ const routes = [
         path:"/layout",
         name: "layout",
         component: Layout
+      },
+      {
+        path:"/support_home",
+        name: "support_home",
+        component: Support_Home
       },
       {
         // the 404 route, when none of the above matches

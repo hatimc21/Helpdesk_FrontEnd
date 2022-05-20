@@ -1,42 +1,18 @@
 <template>
   <div>
-    <!-- Begin::Row  -->
+    
     <b-row>
-      <!-- Begin::Col  -->
+     
       <b-col xl="12">
-        <!-- Begin::Card -->
+        
         <b-card class="mt-1">
-          <!-- Begin::Row  -->
+          
           <b-row>
-            <!-- Begin::Col -->
+           
             <b-col xl="12" class="d-flex justify-content-between">
-              <!-- Begin::Button for show filter -->
-              <b-icon
-                class="mx-2"
-                icon="filter-left"
-                font-scale="1.4"
-                style="cursor: pointer"
-                aria-controls="show-filter"
-                v-b-tooltip.hover
-                title="Show Filters"
-                @click="showFilter = !showFilter"
-              ></b-icon>
-              <!-- End::Button for show filter -->
+              
               <div>
-                <!-- Begin::Reset Filter -->
-                <b-icon
-                  style="cursor: pointer"
-                  icon="arrow-clockwise"
-                  :animation="busyFilter ? 'spin-pulse' : ''"
-                  font-scale="1.4"
-                  v-b-tooltip.hover
-                  title="Reset Filter"
-                  @click="resetFilters"
-                  class="mx-2"
-                ></b-icon>
-                <!-- End::Reset Filter -->
-
-                <!-- Begin::Refresh Data -->
+               
                 <b-icon
                   style="cursor: pointer"
                   icon="arrow-repeat"
@@ -46,12 +22,10 @@
                   title="Refresh data"
                   @click="refreshData"
                 ></b-icon>
-                <!-- End::Refresh Data -->
+              
               </div>
             </b-col>
-            <!-- End::Col -->
-
-            <!-- Begin::Filter  -->
+           
             <b-col xl="12">
               <b-collapse id="show-filter" v-model="showFilter" class="mt-2">
                 <!-- Begin::Row  -->
@@ -135,17 +109,7 @@
           <!-- Begin::Row  -->
           <b-row class="my-2">
             <b-col xl="12">
-              <!-- Begin:: search -->
-              <b-input-group>
-                <b-form-input
-                  id="search"
-                  v-model.trim="filters.search"
-                  type="text"
-                  placeholder="Search..."
-                  debounce="1000"
-                ></b-form-input>
-              </b-input-group>
-              <!-- End::search  -->
+              
               <hr />
             </b-col>
           </b-row>
@@ -159,7 +123,7 @@
               hover
               show-empty
               :fields="fields"
-              :items="tickets"
+              :items="items"
               :busy="busy"
               :per-page="perPage"
               :current-page="currentPage"
@@ -194,7 +158,7 @@
 
               <!-- Begin:: status -->
               <template #cell(status)="{ item }">
-                {{ item.status.name }}
+                {{ item.status }}
               </template>
               <!-- End:: status -->
 
@@ -277,6 +241,7 @@
 import globalMixin from "@/core/mixins/global-mixin";
 import { mapState } from "vuex";
 import configMessage from "@/core/config/config-message-swall";
+import axios from "axios";
 
 export default {
   name: "TableCurrencies",
@@ -338,45 +303,28 @@ export default {
     },
   },
   data() {
+      ticketssdata:[]
     return {
       fields: [
         {
-          key: "ticket_number",
+          key: "id",
           label: "ID",
         },
         {
-          key: "date",
-          label: "Date Created",
+          key: "name_ticket",
+          label: "Ticket Name ",
         },
         {
-          key: "title",
+          key: "description_ticket",
           label: "Description",
         },
-        {
-          key: "created_by",
-          label: "Employee",
-        },
-        {
-          key: "kind",
-          label: "Kind",
-        },
-        {
-          key: "category",
-          label: "Categories",
-        },
-        {
-          key: "priority",
-          label: "Priorities",
-        },
+       
         {
           key: "status",
           label: "Status",
         },
-        {
-          key: "actions",
-          label: "Actions",
-        },
       ],
+      items:[],
       filters: {
         search: "",
         selectedCategories: "",
@@ -419,6 +367,7 @@ export default {
   },
   methods: {
     refreshData() {
+      console.log(localStorage.getItem("user-id"))
       try {
         this.busy = true;
         setTimeout(() => {
@@ -466,15 +415,24 @@ export default {
       });
     },
     async getListOfTickets() {
-      const query = {
-        q: this.filters.search,
-        category: this.filters.selectedCategories,
-        kind: this.filters.selectedKind,
-        status: this.filters.selectedStatus,
-        priority: this.filters.selectedPriorities,
-        page: 1,
-        per_page: 10,
-      };
+      var uid = localStorage.getItem("user-id")
+      let result = await axios.get('https://zae1qw.deta.dev/ticketsList/'+uid)
+      localStorage.setItem("tickets-list",JSON.stringify(result.data))
+      const tli = localStorage.getItem("tickets-list")
+      console.log(result.data)
+      this.items = JSON.parse(JSON.stringify(result.data))
+      for(let i =0 ;i<this.items.length;i++){
+        console.log(this.items[i].status)
+        if(this.items[i].status == "True"){
+          this.items[i].status = "Completed"
+        }
+        else
+        {
+          this.items[i].status = "Pending"
+        }
+      console.log(this.items[i].status)
+      }
+
       try {
         await this.$store.dispatch("ticket/getListOfTickets", query);
         await this.$router
@@ -484,6 +442,7 @@ export default {
     },
   },
 };
+
 </script>
 
 <style scoped></style>

@@ -3,20 +3,26 @@
 <div>
 <p data-item='HELP DESK'>HELP DESK</p>
 
-  <div>Welcome to your main page :</div>
+  <div>Welcome to the admin page</div>
   <nav>
     <ul class="menuItems">
       <li><a v-on:click="toticket" data-item='Tickets'>Tickets</a></li>
+      <li><a v-on:click="toproject" data-item='Project'>Project</a></li>
+      <li><a v-on:click="tousers" data-item='Users'>Users</a></li>
+
     </ul>
   </nav>
 </div>
 </template>
 <script>
 export default {
-    name: 'User_Home',
+    name: 'Admin_Home',
     methods:{
       async toticket (){
         this.$router.push({name :'tickets'})
+      },
+      async tousers (){
+        this.$router.push({name :'users'})
       }
     }
 }

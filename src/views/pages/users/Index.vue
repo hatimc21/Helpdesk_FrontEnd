@@ -1,7 +1,7 @@
 <template>
   <b-card class="my-3">
     <b-card-header class="d-flex justify-content-between">
-      <h3>Employees</h3>
+      <h3>Users</h3>
       <div>
         <b-button
           v-if="isAdd"
@@ -174,7 +174,7 @@ import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
 import configMessage from "@/core/config/config-message-swall";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Employee",
+  name: "Users",
   mixins: [validationMixin, globalMixin],
   validations() {
     if (this.isEditForm) {

@@ -20,6 +20,7 @@
         <!-- end:: Button Entry  -->
         <!-- Begin:: Button ticket form  -->
         <div v-else>
+          <!--add-->
           <b-button
             v-if="isAdd"
             type="button"
@@ -30,13 +31,14 @@
             class="mx-1"
             >Add</b-button
           >
+          <!-- save button-->
           <b-button
             v-else
             type="button"
             v-b-tooltip.hover
             :title="isEditForm ? 'Edit ticket' : 'Save ticket'"
             :variant="isEditForm ? 'outline-warning' : 'outline-primary'"
-            @click="onSubmit"
+            v-on:click="onSubmit"
             class="mx-1"
             >{{ isEditForm ? "Edit" : "Save" }}</b-button
           >
@@ -74,171 +76,34 @@
           <b-row>
             <b-col xl="3">
               <b-form-group
-                label="Subject:"
+                label="Ticket Name:"
                 label-for="title"
                 invalid-feedback="Subject is required"
               >
                 <b-form-input
                   id="title"
-                  v-model="$v.form.title.$model"
-                  @input="$v.form.title.$reset()"
-                  @blur="$v.form.title.$touch()"
-                  :state="validateState({ name: 'title' })"
+                  type="text"
+                  v-model.trim="tname"
                 >
                 </b-form-input>
               </b-form-group>
             </b-col>
 
             <b-col xl="3">
-              <b-form-group
-                label="Date From:"
-                label-for="date"
-                invalid-feedback="Date is required"
-              >
-                <b-form-input
-                  type="datetime-local"
-                  v-model="$v.form.date.$model"
-                  :state="validateState({ name: 'date' })"
-                >
-                </b-form-input>
-              </b-form-group>
+              
             </b-col>
 
             <b-col xl="6">
-              <b-form-group label="Employee(s):" label-for="employees">
-                <Multiselect
-                  v-model="$v.form.employees.$model"
-                  :options="employees"
-                  :multiple="true"
-                  :close-on-select="false"
-                  :clear-on-select="false"
-                  :preserve-search="true"
-                  placeholder="Pick some"
-                  label="name"
-                  track-by="name"
-                  :preselect-first="false"
-                  @input="$v.form.employees.$reset()"
-                  @blur="$v.form.employees.$touch()"
-                >
-                  <template slot="selection" slot-scope="{ values, isOpen }">
-                    <span
-                      class="multiselect__single"
-                      v-if="values.length &amp;&amp; !isOpen"
-                    >
-                      {{ values.length }} options selected
-                    </span>
-                  </template>
-                </Multiselect>
-                <b-form-invalid-feedback
-                  :state="validateState({ name: 'employees' })"
-                >
-                  Select employees is required
-                </b-form-invalid-feedback>
-              </b-form-group>
+             
             </b-col>
           </b-row>
-          <b-row>
-            <b-col xl="3">
-              <b-form-group label="Category:" label-for="category">
-                <b-form-select
-                  id="category"
-                  class="mr-2"
-                  v-model="$v.form.selectedCategories.$model"
-                  :options="categories"
-                  :state="validateState({ name: 'selectedCategories' })"
-                  aria-describedby="category-live-feedback"
-                >
-                  <template #first>
-                    <b-form-select-option value="" disabled
-                      >--
-                      {{ " Please select one of the options " }}
-                      --</b-form-select-option
-                    >
-                  </template>
-                </b-form-select>
-                <b-form-invalid-feedback id="category-live-feedback">
-                  {{ "Category is required" }}
-                </b-form-invalid-feedback>
-              </b-form-group>
-            </b-col>
-
-            <b-col xl="3">
-              <b-form-group label="Status:" label-for="status">
-                <b-form-select
-                  id="status"
-                  class="mr-2"
-                  v-model="$v.form.selectedStatus.$model"
-                  :options="statuses"
-                  :state="validateState({ name: 'selectedStatus' })"
-                  aria-describedby="status-live-feedback"
-                >
-                  <template #first>
-                    <b-form-select-option value="" disabled
-                      >--
-                      {{ " Please select one of the options " }}
-                      --</b-form-select-option
-                    >
-                  </template>
-                </b-form-select>
-                <b-form-invalid-feedback id="status-live-feedback">
-                  {{ "Status is required" }}
-                </b-form-invalid-feedback>
-              </b-form-group>
-            </b-col>
-
-            <b-col xl="3">
-              <b-form-group label="Priority:" label-for="priority">
-                <b-form-select
-                  id="priority"
-                  class="mr-2"
-                  v-model="$v.form.selectedPriorities.$model"
-                  :options="priorities"
-                  :state="validateState({ name: 'selectedPriorities' })"
-                  aria-describedby="priority-live-feedback"
-                >
-                  <template #first>
-                    <b-form-select-option value="" disabled
-                      >--
-                      {{ " Please select one of the options " }}
-                      --</b-form-select-option
-                    >
-                  </template>
-                </b-form-select>
-                <b-form-invalid-feedback id="priority-live-feedback">
-                  {{ "Priority is required" }}
-                </b-form-invalid-feedback>
-              </b-form-group>
-            </b-col>
-
-            <b-col xl="3">
-              <b-form-group label="Kind:" label-for="kind">
-                <b-form-select
-                  id="kind"
-                  class="mr-2"
-                  v-model="$v.form.selectedKind.$model"
-                  :options="kinds"
-                  :state="validateState({ name: 'selectedKind' })"
-                  aria-describedby="kind-live-feedback"
-                >
-                  <template #first>
-                    <b-form-select-option value="" disabled
-                      >--
-                      {{ " Please select one of the options " }}
-                      --</b-form-select-option
-                    >
-                  </template>
-                </b-form-select>
-                <b-form-invalid-feedback id="kind-live-feedback">
-                  {{ "kind is required" }}
-                </b-form-invalid-feedback>
-              </b-form-group>
-            </b-col>
-          </b-row>
+        
+           
           <b-row>
             <b-col sm="12">
               <b-form-textarea
                 id="description"
-                v-model="form.description"
+                v-model.trim="tdesc"
                 placeholder="Description"
                 rows="3"
               ></b-form-textarea>
@@ -275,6 +140,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import globalMixin from "@/core/mixins/global-mixin";
 import moment from "moment";
 import configMessage from "@/core/config/config-message-swall";
@@ -289,10 +155,16 @@ export default {
   components: {
     TableListOfTickets: () =>
       import("@/components/tables/table-list-of-tickets/TableListOfTickets"),
-    Multiselect: () => import("vue-multiselect"),
+    
     ModalTicketInformation: () =>
       import("@/components/modals/ModalTicketInformation"),
     TimeEntryForm: () => import("@/components/form/TimeEntryForm"),
+  },
+  data(){
+      return{
+        tdesc:'',
+      tname:'',
+      };
   },
   created() {
     this.$store.dispatch("ticket/getListOfTickets");
@@ -495,6 +367,10 @@ export default {
       } catch (e) {}
     },
     async onSubmit() {
+        const user_id = localStorage.getItem("user-id")
+        let result = await axios.post('https://zae1qw.deta.dev/addticket?name_ticket='+tname+'&description_ticket='+tdesc+'&user_id='+user_id
+        )
+        console.log(result)
       try {
         // valid form
         this.$v.form.$touch();

@@ -38,13 +38,15 @@
           ></b-form-input>
         </b-form-group>
         <!-- end:: password-->
-            <b-button v-on:click="Signin" tag="button">Sign In</b-button>
+            <b-button v-on:click="Signin" tag="button">SignIn</b-button>
             <br>
             <br>
             <b-button v-on:click="send_tosignup">create account</b-button>
       </b-form>
+      <TableListOfTickets :userid="uid" />
+
       <p class="mt-3 mb-3 text-muted text-center">
-        © 2022
+       2020-© 2022
       </p>
       <!-- form:: password-->
     </b-card>
@@ -53,6 +55,7 @@
 </template>
 
 <script>
+import TableListOfTickets from '../../../components/tables/table-list-of-tickets/TableListOfTickets.vue'
 import axios from 'axios'
 import router from '../../../router'
 export default {
@@ -62,8 +65,12 @@ export default {
     {
       return{
         email:'',
-        password:''
+        password:'',
+        uid: user.user_id
       }
+    },
+    components: {
+      TableListOfTickets
     },
     methods:{
       async Signin()
@@ -73,12 +80,15 @@ export default {
         console.log(localStorage.getItem("user-info"))
         const info = localStorage.getItem("user-info")
         const user = JSON.parse(info.substring(8,info.length-1))
+        localStorage.setItem("user-id",user.user_id)
         console.log(user.user_id)
        if(user.user_role==1){
-         this.$router.push({name:'tickets'});  
-       }else
+         this.$router.push({name:'admin_home'});  
+       }else if(user.user_role==3)
        { 
-         this.$router.push({ name: "employees" })
+         this.$router.push({ name: "user_home" })
+        }else {
+          this.$router.push({name:"support_home"})
         }
       },
       async send_tosignup()

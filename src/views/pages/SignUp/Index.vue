@@ -70,7 +70,7 @@
             <b-button v-on:click="send_tologin">have an accout?</b-button>
       </b-form>
       <p class="mt-3 mb-3 text-muted text-center">
-        © 2022
+        2022-©2022
       </p>
       <!-- form:: password-->
     </b-card>
@@ -94,7 +94,7 @@ export default {
     methods:{
       async Signup()
       {
-        let result = await axios.post('https://zae1qw.deta.dev/signup?email='+this.email+'.com&username='+this.name+'&password='+this.password+'&role_as=3&phone_number='+this.number)
+        let result = await axios.post('https://zae1qw.deta.dev/signup?email='+this.email+'&username='+this.name+'&password='+this.password+'&role_as=3&phone_number='+this.number)
         console.log(result)
         this.$notify({
         group: 'foo',

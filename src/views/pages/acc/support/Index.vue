@@ -13,7 +13,7 @@
 </template>
 <script>
 export default {
-    name: 'User_Home',
+    name: 'Support_Home',
     methods:{
       async toticket (){
         this.$router.push({name :'tickets'})
