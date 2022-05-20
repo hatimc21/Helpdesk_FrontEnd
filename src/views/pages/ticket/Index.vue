@@ -83,7 +83,7 @@
                 <b-form-input
                   id="title"
                   type="text"
-                  v-model.trim="tname"
+                  v-model.trim="title"
                 >
                 </b-form-input>
               </b-form-group>
@@ -103,7 +103,7 @@
             <b-col sm="12">
               <b-form-textarea
                 id="description"
-                v-model.trim="tdesc"
+                v-model.trim="description"
                 placeholder="Description"
                 rows="3"
               ></b-form-textarea>
@@ -159,12 +159,6 @@ export default {
     ModalTicketInformation: () =>
       import("@/components/modals/ModalTicketInformation"),
     TimeEntryForm: () => import("@/components/form/TimeEntryForm"),
-  },
-  data(){
-      return{
-        tdesc:'',
-      tname:'',
-      };
   },
   created() {
     this.$store.dispatch("ticket/getListOfTickets");
@@ -268,6 +262,8 @@ export default {
   },
   data() {
     return {
+      description:'',
+      title:'',
       isEditForm: false,
       isAdd: true,
       ticketInformation: {},
@@ -368,7 +364,7 @@ export default {
     },
     async onSubmit() {
         const user_id = localStorage.getItem("user-id")
-        let result = await axios.post('https://zae1qw.deta.dev/addticket?name_ticket='+tname+'&description_ticket='+tdesc+'&user_id='+user_id
+        let result = await axios.post('https://zae1qw.deta.dev/addticket?name_ticket='+title.value+'&description_ticket='+description.value+'&user_id='+user_id
         )
         console.log(result)
       try {
